@@ -41,6 +41,12 @@ struct KeyValue {
 
 void setup()
 {
+
+  // ### Deklaration ###
+  pinMode(portalPin, INPUT_PULLUP); 
+  // Extra für Beer Tap - GPIO für LED Info und Quittierung
+  pinMode(13, OUTPUT);
+	
   Serial.begin(115200);
 
   int timer = 0;
@@ -49,8 +55,13 @@ void setup()
   while (timer < 2000)
   {
     digitalWrite(2, LOW);
-    Serial.println(touchRead(portalPin));
-    if(touchRead(portalPin) < 40){
+	  
+    // ### Abfrage Modus AP Launchen
+    digitalWrite(13, HIGH);
+    // ### touchRead -> digitalRead und < 40 auf == false
+    Serial.println(digitalRead(portalPin));
+    if(digitalRead(portalPin) == false){
+	    
       Serial.println("Launch portal");
       triggerConfig = true;
       timer = 5000;
@@ -62,6 +73,9 @@ void setup()
   }
 
   timer = 0;
+	
+  // ### Abfrage Modus Portal Launch beendet
+  digitalWrite(13, LOW);
 
   FlashFS.begin(FORMAT_ON_FAIL);
 
@@ -90,8 +104,9 @@ void setup()
     configOverSerialPort();
   }
 
-  pinMode(highPin.toInt(), OUTPUT);
-  onOff();
+  // ### Auskommentiert: pinMode(highPin.toInt(), OUTPUT);
+  // ### Auskommentiert: onOff();
+
   Serial.println(lnbitsServer + "/api/v1/ws/" + deviceId);
   webSocket.beginSSL(lnbitsServer, 443, "/api/v1/ws/" + deviceId);
   webSocket.onEvent(webSocketEvent);
@@ -104,6 +119,16 @@ void loop() {
   }
   digitalWrite(2, LOW);
   paid = false;
+	
+    // ### Zwei mal flaschen = loop	    
+    digitalWrite(13, HIGH);
+    delay(100);
+    digitalWrite(13, LOW);
+    delay(100);
+    digitalWrite(13, HIGH);
+    delay(100);
+    digitalWrite(13, LOW);	
+	
   while(paid == false){
     webSocket.loop();
     if(paid){
@@ -123,6 +148,17 @@ void loop() {
 void onOff()
 { 
   pinMode (highPin.toInt(), OUTPUT);
+	
+  // ### Extra für Beer Tap - Warteschleife bis Button ###	
+  while(digitalRead(portalPin) == HIGH){   // ### für Beer Tap - Abfrage portalPin
+	  
+      // ### Extra für Beer Tap - LED ein Dauerlicht bis Quittierung ###
+      digitalWrite(13, HIGH);
+      delay(100);
+  }
+  // ### Extra für Beer Tap - Nach Quittierung LED aus ###
+  digitalWrite(13, LOW);	
+		
   if(pinFlip == "true"){
     digitalWrite(highPin.toInt(), LOW);
     delay(timePin.toInt());
