@@ -6,7 +6,7 @@
 
 #### Die LED des Leuchtdrucktaster wird zwischen GPIO 13 und GND angeschlossen. Sie hat folgenden Funktionen:
 - Beim Booten signalisiert sie die Abfragezeit (ca. 2 Sek.) während das Portal durch drücken der Taste gestartet werden kann
-- Kurz darauf blinkt sie zweimal schnell und signalisiert damit: Wifi und Wallet Verbindung OK, bitcoinSwitch bereit!
+- Kurz darauf blinkt sie zweimal schnell und signalisiert damit: Wifi gefunden! Das muss aber nicht heißen das er auch das Wallet gefunden hat.
 - Nach einem Zahlungseingang leuchtet die LED dauernd => Warten auf Quittierung (Taste Drücken) um Aktion (Bier zapfen) zu starten
 - Nach dem Ablauf der Aktion blinkt die LEd erneut zweimal und signalisiert damit wieder Bereitschaft
 
