@@ -1,4 +1,24 @@
 
+# +++ bitcoinSwitch Special +++
+## Svens PlebTap
+
+#### Der Portal Pin (meist GPIO 4) ist kein Touch Pin mehr, sondern ein PULL UP Eingang, der gegen Null (GND) geschaltet werden muss. Dazu wird ein Leuchtdrucktaster verwendet. Der Taster wird zwischen GPIO 4 und GND angeklemmt. Er übernimmt auch gleichzeitig eine Quittier- und Informationisfunktion über LED.
+
+#### Die LED des Leuchtdrucktaster wird zwischen GPIO 13 und GND angeschlossen. Sie hat folgenden Funktionen:
+- Beim Booten signalisiert sie die Abfragezeit (ca. 2 Sek.) während das Portal durch drücken der Taste gestartet werden kann
+- Kurz darauf blinkt sie zweimal schnell und signalisiert damit: Wifi und Wallet Verbindung OK, bitcoinSwitch bereit!
+- Nach einem Zahlungseingang leuchtet die LED dauernd => Warten auf Quittierung (Taste Drücken) um Aktion (Bier zapfen) zu starten
+- Nach dem Ablauf der Aktion blinkt die LEd erneut zweimal und signalisiert damit wieder Bereitschaft
+
+#### Ansteuerung eines Doppelrelais
+- spezielle Relaisboards haben zwei Relais auf einem Board. Für den Beer Tap sollen die gleichzeitig geschaltet werden. Da diese Boards aber auf der Platine verdrahtet sind, muss man beide Relais ansteuern um sie zu schalten. 
+- In LNbits kann man aber pro QR-Code nur einen GPIO festlegen, deswegen wird in der Software der nächste GPIO (GPIO X + 1) zusätzlich angesteuert
+- Ist unter LNURLDevice der GPIO 16 ausgewählt, wird immer auch immer der nächst höhere, also der GPIO 17 angesteuert 
+
+<br> 
+<br> 
+
+
 <img style="max-width:100%;" src="https://user-images.githubusercontent.com/33088785/166832680-600ed270-cbc9-4749-82f1-c1853b242329.png">
 
 <img style="max-width:100%;" src="https://user-images.githubusercontent.com/33088785/166829474-a28ca2b7-dd3e-46d4-89d3-8a10bf1d3fad.png">
