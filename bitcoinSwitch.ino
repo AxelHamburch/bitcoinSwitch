@@ -32,6 +32,9 @@ bool paid;
 bool down = false;
 bool triggerConfig = false; 
 
+// ### zweiter GPIO für Parallelrelais
+int highPin2;
+
 WebSocketsClient webSocket;
 
 struct KeyValue {
@@ -149,6 +152,10 @@ void onOff()
 { 
   pinMode (highPin.toInt(), OUTPUT);
 	
+  // Extra für Beer Tap - GPIO für zweites Relais (GPIO + 1) bestimmen und setzten 
+  highPin2 = highPin.toInt() + 1;
+  pinMode(highPin2, OUTPUT);
+	
   // ### Extra für Beer Tap - Warteschleife bis Button ###	
   while(digitalRead(portalPin) == HIGH){   // ### für Beer Tap - Abfrage portalPin
 	  
@@ -161,14 +168,18 @@ void onOff()
 		
   if(pinFlip == "true"){
     digitalWrite(highPin.toInt(), LOW);
+    digitalWrite(highPin2, LOW);   // ### zweites Relais
     delay(timePin.toInt());
     digitalWrite(highPin.toInt(), HIGH); 
+    digitalWrite(highPin2, HIGH);   // ### zweites Relais
     delay(2000);
   }
   else{
     digitalWrite(highPin.toInt(), HIGH);
+    digitalWrite(highPin2, HIGH);   // ### zweites Relais
     delay(timePin.toInt());
-    digitalWrite(highPin.toInt(), LOW); 
+    digitalWrite(highPin.toInt(), LOW);
+    digitalWrite(highPin2, LOW);   // ### zweites Relais
     delay(2000);
   }
 }
