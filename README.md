@@ -8,7 +8,7 @@
 - Beim Booten signalisiert sie die Abfragezeit (ca. 2 Sek.) während das Portal durch drücken der Taste gestartet werden kann
 - Kurz darauf blinkt sie zweimal schnell und signalisiert damit: Wifi gefunden! Das muss aber nicht heißen das er auch das Wallet gefunden hat.
 - Nach einem Zahlungseingang leuchtet die LED dauernd => Warten auf Quittierung (Taste Drücken) um Aktion (Bier zapfen) zu starten
-- Nach dem Ablauf der Aktion blinkt die LEd erneut zweimal und signalisiert damit wieder Bereitschaft
+- Nach dem Ablauf der Aktion blinkt die LED erneut zweimal und signalisiert damit wieder Bereitschaft
 
 #### Ansteuerung eines Doppelrelais
 - spezielle Relaisboards haben zwei Relais auf einem Board. Für den Beer Tap sollen die gleichzeitig geschaltet werden. Da diese Boards aber auf der Platine verdrahtet sind, muss man beide Relais ansteuern um sie zu schalten. 
