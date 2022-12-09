@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-        bitcoinSwitch | Turn things on with bitcoin
+        ⚡️ ₿eer Tap with LED button
     </title>
 
     <!-- Primary Meta Tags -->
@@ -89,11 +89,12 @@
                 <div class="col-lg-12">
                     <div class="ud-hero-content wow fadeInUp" data-wow-delay=".2s">
                         <h1 class="ud-hero-title">
-                            Axel's bitcoinSwitch<br/>Turn on the LED
+                            ₿eer Tap with LED button<br/>Build on Lightning ⚡️ with LNbits
                         </h1>
                         <p class="ud-hero-desc">
-                            Flash binaries, and configure directly from browser
-
+                            Spezial Version des bitcoinSwitch mit LED Taster<br>
+                            <b>Siehe Features!</b>
+                        
                         </p>
                         <center>
                             <div style="max-width: 700px" class="row ud-hero-buttons">
@@ -273,24 +274,31 @@
     <!-- ====== Features Start ====== -->
     <section id="features" class="ud-features">
         <div class="container">
-                        <h2>Installation and configuring</h2>
+                        <h2>Features</h2>
 
                         <div class="ud-info-meta">
-                            <p>Use a compatible browser such as Chrome or Edge. Connect the ESP32, click Flash, select Erase.</p>
-                            <p>Once flashed, to enable USB config mode press `GPIO 04`.</p>
-                            <p>Connect to device, select `bitcoinSwitch` template, add details, `Save to device`.</p>
+                            <p>
+                            <br><h4>Verdrahtung:</h4>
+                            Der Taster wird zwischen Pin 4 und GND verdrahtet. 
+                            Die LED des Tasters zwischen Pin 13 und GND.
+                            Als Ausgang sollte auf Pin 12 verdrahtet werden.
+                            <br><br><h4>Funktion:</h4>
+                            Der Taster ersetzt die "Touch Funktion" des Pin 4. Man kann mit ihm also sowohl
+                            das Konfigurationsportal starten als auch die Zahlung quittieren um den Zapfvorgang
+                            zu starten. Die LED zeigt zum Start des ESP32 zwei Sekunden langs das Fenster an, bei dem das
+                            Konfigurationsportal durch drücken des Tasters gestarten werden kann. Kurz später blinkt die LED zweimal
+                            kurz und signalisiert damit das der ESP32 das WiFi gefunden hat. Wenn Ein Zahlung eingegangen ist,
+                            leuchte die LED dauerhaft. Es wird damit signalisiert, dass der Zapfvorgang gestartet 
+                            werden kann. Danach geht sie wieder aus, um kurz darauf wieder zweimal zu blinkt. 
+                            Der Beer Tap ist jetzt wieder bereit.
+                            <br><br><h4>Kontakt</h4>
+                            Twitter: <a href="https://twitter.com/AxelHamburch">AxelHamburch</a> Webseite: <a href="https://ereignishorizont.xyz/">ereignishorizont.xyz</a>
+                            <br><br><h4>Vielen Dank</h4>
+                            <p>An <a href="https://twitter.com/arcbtc">Ben Arc</a> für den wunderbaren <a
+                                    href="https://github.com/lnbits/bitcoinswitch">bitcoinSwitch</a></p>
+                        <br><br></p>
                         </div>
-                        <h5>LED feedback</h5>
-                        <p>
-                            <table>
-                                <tr>
-                                  <th><img src="https://user-images.githubusercontent.com/33088785/204107016-bc9473e0-2843-4873-af71-cd934e07f444.gif" style="width:100%"></th>
-                                  <th><img src="https://user-images.githubusercontent.com/33088785/204107029-cc4ad95b-b130-4b48-9091-86d7be7d4f16.gif" style="width:100%"></th>
-                                  <th><img src="https://user-images.githubusercontent.com/33088785/204107037-870571f8-b860-4019-93d4-bbdbeaf1091f.gif" style="width:100%"></th>
-                                  <th><img src="https://user-images.githubusercontent.com/33088785/204107044-b8a7d94f-6908-40dd-bb82-974e08f077f4.gif" style="width:100%"></th>
-                                </tr>
-                              </table> 
-                        </p>
+
         </div>
     </section>
     <!-- ====== Features End ====== -->
