@@ -1,4 +1,28 @@
 
+# +++ bitcoinSwitch Special +++
+## Beer Tap with LED Button (v1)
+
+                          
+Verdrahtung:
+
+Der Taster wird zwischen Pin 4 und GND verdrahtet. 
+Die LED des Tasters zwischen Pin 13 und GND.
+Der Ausgang zur Ansteuerung des Relais muss auf Pin 12 verdrahtet werden.
+
+Funktion:
+
+Der Taster ersetzt die "Touch Funktion" des Pin 4. Man kann mit ihm also sowohl
+das Konfigurationsportal starten als auch die Zahlung quittieren, um den Zapfvorgang
+zu starten. Die LED zeigt zum Start des ESP32 wenige Sekunden das Fenster an, bei dem das
+Konfigurationsportal durch drücken des Tasters gestarten werden kann. Kurz später blinkt die LED zweimal
+kurz und signalisiert damit das der ESP32 das WiFi gefunden hat. Wenn Ein Zahlung eingegangen ist,
+leuchte die LED dauerhaft. Es wird damit signalisiert, dass der Zapfvorgang gestartet 
+werden kann. Nach dem Zapfvorgang geht sie wieder aus, um kurz darauf wieder zweimal zu blinken. 
+Der Beer Tap ist jetzt wieder bereit.
+
+
+
+
 <img style="max-width:100%;" src="https://user-images.githubusercontent.com/33088785/166832680-600ed270-cbc9-4749-82f1-c1853b242329.png">
 
 <img style="max-width:100%;" src="https://user-images.githubusercontent.com/33088785/166829474-a28ca2b7-dd3e-46d4-89d3-8a10bf1d3fad.png">
