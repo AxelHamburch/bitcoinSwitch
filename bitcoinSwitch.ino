@@ -103,9 +103,17 @@ void loop() {
   while(paid == false){
     webSocket.loop();
     if(paid){
+      // Set "GPIO" as output
       pinMode(getValue(payloadStr, '-', 0).toInt(), OUTPUT);
+      // 1. GPIO pulse: HIGH - 500 ms - LOW
       digitalWrite(getValue(payloadStr, '-', 0).toInt(), HIGH);
+      delay(500);
+      digitalWrite(getValue(payloadStr, '-', 0).toInt(), LOW);
+      // bitcoinSwitch Time "x" ms
       delay(getValue(payloadStr, '-', 1).toInt());
+      // 1. GPIO pulse: HIGH - 500 ms - LOW
+      digitalWrite(getValue(payloadStr, '-', 0).toInt(), HIGH);
+      delay(500);
       digitalWrite(getValue(payloadStr, '-', 0).toInt(), LOW);
     }
   }
