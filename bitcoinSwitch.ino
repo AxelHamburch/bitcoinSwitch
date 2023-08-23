@@ -105,19 +105,24 @@ void loop() {
     if(paid){
       // Set "GPIO" as output
       pinMode(getValue(payloadStr, '-', 0).toInt(), OUTPUT);
+      //Serial.printf("Start KanutoSwitch Switch GPIO: %d / Time: %d  ms\n", getValue(payloadStr, '-', 0), getValue(payloadStr, '-', 1));
+      Serial.println("Start KanutoSwitch Switch GPIO: " + String(getValue(payloadStr, '-', 0)) + " / Time: " + String(getValue(payloadStr, '-', 1)));
       // 1. GPIO pulse: HIGH - 500 ms - LOW
       digitalWrite(getValue(payloadStr, '-', 0).toInt(), HIGH);
+      Serial.println("Pulse 1");
       delay(500);
       digitalWrite(getValue(payloadStr, '-', 0).toInt(), LOW);
       // bitcoinSwitch Time "x" ms
+      Serial.println("Delay time..");
       delay(getValue(payloadStr, '-', 1).toInt());
       // 1. GPIO pulse: HIGH - 500 ms - LOW
       digitalWrite(getValue(payloadStr, '-', 0).toInt(), HIGH);
+      Serial.println("Pulse 2");
       delay(500);
       digitalWrite(getValue(payloadStr, '-', 0).toInt(), LOW);
     }
   }
-  Serial.println("Paid");
+  Serial.println("Paid - Event finished");
   paid = false;
 }
 
