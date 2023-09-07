@@ -104,9 +104,9 @@ void loop() {
     webSocket.loop();
     if(paid){
       pinMode(getValue(payloadStr, '-', 0).toInt(), OUTPUT);
-      digitalWrite(getValue(payloadStr, '-', 0).toInt(), HIGH);
-      delay(getValue(payloadStr, '-', 1).toInt());
       digitalWrite(getValue(payloadStr, '-', 0).toInt(), LOW);
+      delay(getValue(payloadStr, '-', 1).toInt());
+      digitalWrite(getValue(payloadStr, '-', 0).toInt(), HIGH);
     }
   }
   Serial.println("Paid");
