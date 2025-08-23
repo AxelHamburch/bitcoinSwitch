@@ -1,11 +1,11 @@
 export const addressesAndFiles = [
   {
     address: "0x1000",
-    fileName: "bitcoinSwitch.ino.bootloader.bin",
+    fileName: "bootloader.bin",
   },
   {
     address: "0x8000",
-    fileName: "bitcoinSwitch.ino.partitions.bin",
+    fileName: "partitions.bin",
   },
   {
     address: "0xE000",
@@ -13,7 +13,7 @@ export const addressesAndFiles = [
   },
   {
     address: "0x10000",
-    fileName: "bitcoinSwitch.ino.bin",
+    fileName: "main.bin",
   },
 ];
 
@@ -21,50 +21,56 @@ export const configPath = "elements.json";
 
 export const elements = [
   {
-    name: "password",
-    value: "ToTheMoon1",
-    label: "Password for PoS AP WiFi",
-    type: "text",
+    type: "heading",
+    label: "WiFi Settings",
   },
   {
-    name: "ssid",
+    name: "config_ssid",
     value: "",
     label: "WiFi SSID",
     type: "text",
   },
   {
-    name: "wifipassword",
+    name: "config_password",
     value: "",
     label: "WiFi Password",
     type: "text",
   },
   {
-    name: "socket",
+    type: "heading",
+    label: "LNbits Device URL",
+  },
+  {
+    name: "config_device_string",
     value: "",
-    label: "LNURLDEVICE SWITCH OPTION Use LNURLDevices extension in LNbits",
+    label: "Device string, use BitcoinSwitch extension in LNbits",
     type: "text",
   },
   {
-    name: "thresholdInkey",
+    type: "heading",
+    label: "Threshold Mode",
+  },
+  {
+    name: "config_threshold_inkey",
     value: "",
     label:
       "THRESHOLD OPTION (use lnurlp extension to make an lnurlp) Invoice/read key from LNbits",
     type: "text",
   },
   {
-    name: "thresholdAmount",
+    name: "config_threshold_amount",
     value: "",
     label: "THRESHOLD OPTION amount to hit to trigger",
     type: "text",
   },
   {
-    name: "thresholdPin",
+    name: "config_threshold_pin",
     value: "",
     label: "THRESHOLD OPTION pin to trigger",
     type: "text",
   },
   {
-    name: "thresholdTime",
+    name: "config_threshold_time",
     value: "",
     label: "THRESHOLD OPTION time to turn of for",
     type: "text",
