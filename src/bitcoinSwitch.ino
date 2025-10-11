@@ -104,44 +104,16 @@ void loop() {
     webSocket.loop();
     if(paid){
       pinMode(getValue(payloadStr, '-', 0).toInt(), OUTPUT);
-      int i = 0;
-      Serial.println("while1");
-      while (i<2)
+      int time = 0;
+      Serial.println("time");
+      while (time < (getValue(payloadStr, '-', 1).toInt()))
       {
         digitalWrite(getValue(payloadStr, '-', 0).toInt(), HIGH);
-        delay(getValue(payloadStr, '-', 1).toInt());
+        delay(100);
         digitalWrite(getValue(payloadStr, '-', 0).toInt(), LOW);
-        delay(getValue(payloadStr, '-', 1).toInt());
-        i++;
+        delay(100);
+        time = time + 200;
       }
-      delay(800);
-      i = 0;
-      Serial.println("while2");
-      while (i<4)
-      {
-        digitalWrite(getValue(payloadStr, '-', 0).toInt(), HIGH);
-        delay(getValue(payloadStr, '-', 1).toInt());
-        digitalWrite(getValue(payloadStr, '-', 0).toInt(), LOW);
-        delay(getValue(payloadStr, '-', 1).toInt());
-        i++;
-      }
-      delay(800);
-      i = 0;
-      Serial.println("while3");
-      while (i<2)
-      {
-        digitalWrite(getValue(payloadStr, '-', 0).toInt(), HIGH);
-        delay(getValue(payloadStr, '-', 1).toInt());
-        digitalWrite(getValue(payloadStr, '-', 0).toInt(), LOW);
-        delay(getValue(payloadStr, '-', 1).toInt());
-        i++;
-      }
-      Serial.println("long");
-      digitalWrite(getValue(payloadStr, '-', 0).toInt(), HIGH);
-      delay(getValue(payloadStr, '-', 1).toInt());
-      delay(getValue(payloadStr, '-', 1).toInt());
-      digitalWrite(getValue(payloadStr, '-', 0).toInt(), LOW);
-      delay(getValue(payloadStr, '-', 1).toInt());
     }
   }
   Serial.println("Paid");
