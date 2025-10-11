@@ -8,9 +8,10 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "D:/VSCode/bitcoinSwitch/bitcoinSwitch",
+                "D:/VSCode/bitcoinSwitch/src",
                 "C:/Users/Datenrettung/.platformio/packages/framework-arduinoespressif32/libraries/SPIFFS/src",
                 "C:/Users/Datenrettung/.platformio/packages/framework-arduinoespressif32/libraries/FS/src",
+                "D:/VSCode/bitcoinSwitch/.pio/libdeps/ESP32-DEV/ESP32Servo/src",
                 "D:/VSCode/bitcoinSwitch/.pio/libdeps/ESP32-DEV/ArduinoJson/src",
                 "D:/VSCode/bitcoinSwitch/.pio/libdeps/ESP32-DEV/WebSockets/src",
                 "C:/Users/Datenrettung/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
@@ -245,9 +246,10 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "D:/VSCode/bitcoinSwitch/bitcoinSwitch",
+                    "D:/VSCode/bitcoinSwitch/src",
                     "C:/Users/Datenrettung/.platformio/packages/framework-arduinoespressif32/libraries/SPIFFS/src",
                     "C:/Users/Datenrettung/.platformio/packages/framework-arduinoespressif32/libraries/FS/src",
+                    "D:/VSCode/bitcoinSwitch/.pio/libdeps/ESP32-DEV/ESP32Servo/src",
                     "D:/VSCode/bitcoinSwitch/.pio/libdeps/ESP32-DEV/ArduinoJson/src",
                     "D:/VSCode/bitcoinSwitch/.pio/libdeps/ESP32-DEV/WebSockets/src",
                     "C:/Users/Datenrettung/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
