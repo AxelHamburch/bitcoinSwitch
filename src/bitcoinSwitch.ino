@@ -29,6 +29,9 @@ bool paid;
 bool down = false;
 bool triggerConfig = false; 
 
+// Morse-Sequenz für "bitcoin"
+const char* MORSE_BITCOIN = "-... .. - -.-. --- .. -.";
+
 WebSocketsClient webSocket;
 
 struct KeyValue {
@@ -100,20 +103,15 @@ void loop() {
   digitalWrite(2, LOW);
   payloadStr = "";
   delay(2000);
-  while(paid == false){
+  while (paid == false) {
     webSocket.loop();
-    if(paid){
-      pinMode(getValue(payloadStr, '-', 0).toInt(), OUTPUT);
-      int time = 0;
-      Serial.println("time");
-      while (time < (getValue(payloadStr, '-', 1).toInt()))
-      {
-        digitalWrite(getValue(payloadStr, '-', 0).toInt(), HIGH);
-        delay(100);
-        digitalWrite(getValue(payloadStr, '-', 0).toInt(), LOW);
-        delay(100);
-        time = time + 200;
-      }
+    if (paid) {   // Zahlungseingang
+      int pin  = getValue(payloadStr, '-', 0).toInt();
+      int unit = getValue(payloadStr, '-', 1).toInt(); // z.B. 70 ms für Ton, Lichtsignale länger
+      pinMode(pin, OUTPUT);
+      digitalWrite(pin, LOW); // sicherstellen, dass AUS
+      Serial.println("Sending MORSE: bitcoin");
+      sendMorse(MORSE_BITCOIN, pin, unit);
     }
   }
   Serial.println("Paid");
@@ -213,4 +211,37 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
     case WStype_FRAGMENT_FIN:
       break;
     }
+}
+
+
+// Hilfsfunktion: gibt die gesamte Morse-Sequenz aus.
+// 'pin' ist der Output-Pin (z.B. LED o. Relais), 'unit' ist die Zeiteinheit in Millisekunden.
+void sendMorse(const char* code, int pin, int unit) {
+  for (size_t i = 0; code[i] != '\0'; ++i) {
+    char c = code[i];
+
+    if (c == '.' || c == '-') {
+      int onTime = (c == '.') ? unit : 3 * unit;
+
+      // Signal EIN
+      digitalWrite(pin, HIGH);
+      delay(onTime);
+
+      // Signal AUS (inter-element gap = 1 * unit) – nur wenn noch nicht am Ende
+      digitalWrite(pin, LOW);
+      if (code[i + 1] != '\0') {
+        delay(unit);
+      }
+    }
+    else if (c == ' ') {
+      // Zwischen Buchstaben: wir hatten gerade 1 * unit Pause nach dem letzten Symbol,
+      // ergänzen auf insgesamt 3 * unit => +2 * unit
+      delay(2 * unit);
+    }
+    else if (c == '/') {
+      // Zwischen Wörtern: insgesamt 7 * unit; wir hatten bereits 1 * unit Pause nach dem Symbol,
+      // ergänzen auf 7 * unit => +6 * unit
+      delay(6 * unit);
+    }
+  }
 }
