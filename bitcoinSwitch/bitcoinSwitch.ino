@@ -13,9 +13,9 @@ String switchStr = "YOUR_LNBITS_SERVER_STRING"; // 'String switchStr = "ws url";
 
 // Change for threshold trigger only
 String thresholdInkey = "YOUR_API_INVOICE_KEY"; // Invoice/read key for the LNbits wallet you want to watch,  'String thresholdInkey = "key";' / 'String thresholdInkey = "null";'
-long thresholdAmount = 2; // In sats, 'long thresholdAmount = 0;' / 'long thresholdAmount = 100;'
-int thresholdPin = 12; // GPIO pin, 'int thresholdPin = 16;' / 'int thresholdPin;'
-long thresholdTime = 2000; // Time to turn pin on, 'long thresholdTime = 2000;' / 'long thresholdTime;'
+long thresholdAmount = 1; // In sats, 'long thresholdAmount = 0;' / 'long thresholdAmount = 100;'
+int thresholdPin = 13; // GPIO pin, 'int thresholdPin = 16;' / 'int thresholdPin;'
+long thresholdTime = 4200; // Time to turn pin on, 'long thresholdTime = 2000;' / 'long thresholdTime;'
 
 ///////////////////////////////////////////////////////////////////////////////////
 //                                 END of variables                              //
@@ -140,12 +140,28 @@ void loop() {
                 Serial.println("thresholdSum: " + String(thresholdSum) + " mSats");
                 Serial.println("thresholdAmount: " + String((thresholdAmount * 1000)) + " mSats");
                 if (thresholdSum >= (thresholdAmount * 1000)) {
+
                     Serial.println("Threshold value reached, switch pin " + String(thresholdPin) + " for " + String(thresholdTime) + " ms.");
-                    pinMode(thresholdPin, OUTPUT);
-                    digitalWrite(thresholdPin, HIGH);
-                    delay(thresholdTime);
-                    digitalWrite(thresholdPin, LOW);
-                    thresholdSum = 0;
+                    
+                    // pinMode(thresholdPin, OUTPUT);
+                    // digitalWrite(thresholdPin, HIGH);
+                    // delay(thresholdTime);
+                    // digitalWrite(thresholdPin, LOW);
+                    // thresholdSum = 0;
+
+      pinMode(thresholdPin, OUTPUT);
+      int time = 0;
+      Serial.println("time");
+      while (time < thresholdTime)
+      {
+        digitalWrite(thresholdPin, HIGH);
+        delay(100);
+        digitalWrite(thresholdPin, LOW);
+        delay(100);
+        time = time + 200;
+      }
+      thresholdSum = 0;
+
                 }
             } else { // If in normal mode we use the pin/time pushed by the websocket
                 pinMode(getValue(payloadStr, '-', 0).toInt(), OUTPUT);
