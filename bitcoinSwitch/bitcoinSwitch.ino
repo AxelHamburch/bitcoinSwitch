@@ -5,17 +5,17 @@
 
 String version = "0.1.1";
 
-String ssid = "null"; // 'String ssid = "ssid";' / 'String ssid = "null";'
-String wifiPassword = "null"; // 'String wifiPassword = "password";' / 'String wifiPassword = "null";'
+String ssid = "YOUR_SSID"; // 'String ssid = "ssid";' / 'String ssid = "null";'
+String wifiPassword = "YOUR_PASSWORD"; // 'String wifiPassword = "password";' / 'String wifiPassword = "null";'
 
 // String from the lnurlDevice plugin in LNbits lnbits.com
-String switchStr = "null"; // 'String switchStr = "ws url";' / 'String switchStr = "null";'
+String switchStr = "YOUR_LNBITS_SERVER_STRING"; // 'String switchStr = "ws url";' / 'String switchStr = "null";'
 
 // Change for threshold trigger only
-String thresholdInkey; // Invoice/read key for the LNbits wallet you want to watch,  'String thresholdInkey = "key";' / 'String thresholdInkey = "null";'
-long thresholdAmount; // In sats, 'long thresholdAmount = 0;' / 'long thresholdAmount = 100;'
-int thresholdPin; // GPIO pin, 'int thresholdPin = 16;' / 'int thresholdPin;'
-long thresholdTime; // Time to turn pin on, 'long thresholdTime = 2000;' / 'long thresholdTime;'
+String thresholdInkey = "YOUR_API_INVOICE_KEY"; // Invoice/read key for the LNbits wallet you want to watch,  'String thresholdInkey = "key";' / 'String thresholdInkey = "null";'
+long thresholdAmount = 2; // In sats, 'long thresholdAmount = 0;' / 'long thresholdAmount = 100;'
+int thresholdPin = 12; // GPIO pin, 'int thresholdPin = 16;' / 'int thresholdPin;'
+long thresholdTime = 2000; // Time to turn pin on, 'long thresholdTime = 2000;' / 'long thresholdTime;'
 
 ///////////////////////////////////////////////////////////////////////////////////
 //                                 END of variables                              //
@@ -188,12 +188,23 @@ String getJsonValue(JsonDocument &doc, const char *name) {
 void readFiles() {
     File paramFile = FlashFS.open(PARAM_FILE, "r");
     if (paramFile) {
+        // If the file is empty, skip parsing and keep hardcoded values
+        size_t fileSize = paramFile.size();
+        if (fileSize == 0) {
+            Serial.println("Param file is empty; using hardcoded config");
+            paramFile.close();
+            // continue and use hardcoded switchStr below as fallback
+        }
+
+        String content = paramFile.readString();
         StaticJsonDocument<2500> doc;
-        DeserializationError error = deserializeJson(doc, paramFile.readString());
+        DeserializationError error = deserializeJson(doc, content);
         if (error) {
             Serial.print("deserializeJson() failed: ");
             Serial.println(error.c_str());
-            return;
+            // Don't return abruptly — close file and keep hardcoded values
+            paramFile.close();
+            // parsing failed, fall through to use hardcoded values below
         }
         if (ssid == "null") { // check ssid is not set above
             ssid = getJsonValue(doc, "ssid");
@@ -306,7 +317,31 @@ void readFiles() {
         }
         Serial.println("");
     }
-    paramFile.close();
+
+    // If lnbitsServer/deviceId weren't set from file, parse the hardcoded switchStr
+    if (lnbitsServer == "" || deviceId == "") {
+        int protocolIndex = switchStr.indexOf("://");
+        if (protocolIndex == -1) {
+            Serial.println("Invalid switchStr: " + switchStr);
+            return;
+        }
+
+        int domainIndex = switchStr.indexOf("/", protocolIndex + 3);
+        if (domainIndex == -1) {
+            Serial.println("Invalid switchStr: " + switchStr);
+            return;
+        }
+
+        urlPrefix = switchStr.substring(0, protocolIndex + 3);
+        lnbitsServer = switchStr.substring(protocolIndex + 3, domainIndex);
+        apiUrl = switchStr.substring(domainIndex, switchStr.length() - uidLength);
+        deviceId = switchStr.substring(switchStr.length() - uidLength);
+
+        Serial.println("(Fallback) LNbits ws prefix: " + urlPrefix);
+        Serial.println("(Fallback) LNbits server: " + lnbitsServer);
+        Serial.println("(Fallback) LNbits API url: " + apiUrl);
+        Serial.println("(Fallback) Switch device ID: " + deviceId);
+    }
 }
 
 //////////////////WEBSOCKET///////////////////
